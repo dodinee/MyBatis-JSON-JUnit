@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- mapperStatement를 생성할 때 사용할 namespace -->
+  <!-- 각 쿼리문은 id로 접근함  -->
+  <mapper namespace = "org.zerock.mybatis.mapper.ReviewMapper">
+  	
+  	<select id="selectAllReviews" 
+  			resultType = "org.zerock.mybatis.domain.ReviewVO">
+  		
+  		SELECT
+  			review_cd,
+  			san_name,
+  			nickname,
+  			user_pic,
+  			title,
+  			contents,
+  			created_dt,
+  			like_cnt
+  		FROM
+  			san_review_v
+  			
+  	</select>
+  	
+  	
+  	<select id="selectReviewByReviewCd" 
+  			resultType = "org.zerock.mybatis.domain.ReviewVO">
+  		
+  		SELECT
+  			review_cd,
+  			san_name,
+  			nickname,
+  			user_pic,
+  			title,
+  			contents,
+  			created_dt,
+  			like_cnt
+  		FROM
+  			san_review_v
+  		<where>
+  		review_cd = #{reviewCd}
+  		</where>
+  			
+  	</select>
+  	
+    
+  </mapper>
+  
+  
+  
+  
+  
+  												

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- mapperStatement를 생성할 때 사용할 namespace -->
+  <!-- 각 쿼리문은 id로 접근함  -->
+  <mapper namespace = "org.zerock.mybatis.mapper.CommentMapper">
+  	
+  	<select id="selectAllComments" 
+  			resultType = "org.zerock.mybatis.domain.CommentVO">
+  		
+  		<![CDATA[
+  			SELECT 
+  				comment_cd, 
+  				target_gb, 
+  				target_cd, 
+  				nickname, 
+  				contents, 
+  				created_dt
+  			FROM 
+  				comment_tb t1,
+  				user_tb t2
+  			WHERE
+  				t1.user_cd = t2.user_cd
+  		]]>
+  	</select>
+  	
+  	<select
+    	id="selectCommentsByTarget" 
+    	resultType="org.zerock.mybatis.domain.CommentVO">
+    	
+    	 SELECT 
+    	 	comment_cd,
+    	 	comment_gb,
+    	 	mention_cd,
+    	 	target_gb,
+    	 	target_cd,
+    	 	nickname,
+    	 	contents,
+    	 	created_dt,
+    	 	status
+         FROM 
+         	comment_tb t1,
+         	user_tb t2
+
+         <where>
+         t1.user_cd = t2.user_cd
+         AND
+         target_gb = #{targetGb}
+         AND 
+         target_cd = #{targetCd}
+         AND 
+         comment_gb = 'COMMENT'
+         </where>
+    </select> 
+    
+     <select
+    	id="selectMentionTarget" 
+    	resultType="org.zerock.mybatis.domain.CommentVO">
+    	
+    	 SELECT 
+    	 	comment_cd,
+    	 	comment_gb,
+    	 	target_gb,
+    	 	target_cd,
+    	 	mention_cd,
+    	 	nickname,
+    	 	contents,
+    	 	created_dt,
+    	 	status
+         FROM 
+         	comment_tb t1,
+         	user_tb t2
+
+         <where>
+         t1.user_cd = t2.user_cd
+         AND
+         target_gb = #{targetGb}
+         AND 
+         target_cd = #{targetCd}
+         AND 
+         comment_gb = 'MENTION'
+         </where>
+    </select> 
+    
+    <select
+    	id="selectMentionsByComment" 
+    	resultType="org.zerock.mybatis.domain.CommentVO">
+    	
+    	 SELECT 
+    	 	comment_cd,
+    	 	comment_gb,
+    	 	target_gb,
+    	 	target_cd,
+    	 	mention_cd,
+    	 	nickname,
+    	 	contents,
+    	 	created_dt,
+    	 	status
+         FROM 
+         	comment_tb t1,
+         	user_tb t2
+
+         <where>
+         t1.user_cd = t2.user_cd
+         AND
+         mention_cd = #{commentCd}
+         </where>
+    </select> 
+    
+    <select
+    	id="selectCommentByUser" 
+    	resultType="org.zerock.mybatis.domain.CommentVO">
+    	
+    	SELECT 
+    		comment_cd,
+    	 	comment_gb,
+    	 	target_gb,
+    	 	target_cd,
+    	 	mention_cd,
+    	 	nickname,
+    	 	contents,
+    	 	created_dt,
+    	 	status
+    	FROM 
+    		comment_tb t1,
+    		user_tb t2
+    	
+    	<where>
+    	t1.user_cd = t2.user_cd
+    	AND
+    	state = 'N'
+    	AND
+    	t1.user_cd = #{userCd}
+    	</where>
+    </select>
+    
+    <delete
+    	id="deleteCommentByCommentCd">
+    	
+    	DELETE
+    	FROM 
+    		comment_tb
+    	
+    	<where>
+    	comment_cd = #{commentCd}
+    	</where>
+    
+    </delete>
+    
+    <delete
+    	id="deleteCommentByUserCd">
+    	
+    	DELETE
+    	FROM
+    		comment_tb
+    	
+    	<where>
+    	user_cd = #(userCd)
+    	</where>	
+    </delete>
+    
+  </mapper>
+  
+  
+  
+  
+  
+  												

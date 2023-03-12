@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<environments default="development">
+	
+		<environment id="development">
+			<transactionManager type="JDBC" />
+
+			<dataSource type="UNPOOLED"> <!-- UNPOOLED  -->
+				<property name="driver" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+				<property name="url" value="jdbc:log4jdbc:oracle:thin:@wegodb1_high?TNS_ADMIN=/Users/sowls/wallet/Wallet_wegodb1" />
+				
+				<property name="username" value="admin" />
+				<property name="password" value="Wego12345678" />
+				
+				<property name="defaultNetworkTimeout" value="2000"/>
+				<property name="driver.encoding" value="UTF-8"/>
+			</dataSource>
+
+		</environment>
+
+		<environment id="product">
+			<transactionManager type="JDBC" />
+
+			<dataSource type="POOLED"> <!-- POOLED  -->
+				<property name="driver" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+				<property name="url" value="jdbc:log4jdbc:oracle:thin:@wegodb1_high?TNS_ADMIN=/Users/sowls/wallet/Wallet_wegodb1" />
+				<property name="username" value="admin" />
+				<property name="password" value="Wego12345678" />
+				
+				<property name="poolMaximumActiveConnections" value="10" />
+        		<property name="poolMaximumIdleConnections" value="3" />
+        		
+        		<property name="poolTimeToWait" value="20000" />
+        		
+        		<property name="poolPingQuery" value="SELECT 1 FROM dual" />
+        		<property name="poolPingEnabled" value="true" />
+        		<property name="poolPingConnectionsNotUsedFor" value="60000" />
+
+        		<property name="driver.encoding" value="UTF-8" />
+			</dataSource>
+
+		</environment>
+		
+	</environments>
+
+
+	<mappers>
+		
+<!-- 		mapper패키지 > .java 파일을 매퍼로 설정  -->
+		<mapper class="org.zerock.mybatis.mapper.ReviewMapper" />
+		<mapper class="org.zerock.mybatis.mapper.CommentMapper" />
+		
+<!-- 		resources > XML 파일을 매퍼로 설정 -->
+		<mapper resource="mappers/CommentMapper.xml"/>
+		<mapper resource="mappers/ReviewMapper.xml"/>
+		
+	</mappers>
+
+</configuration>
